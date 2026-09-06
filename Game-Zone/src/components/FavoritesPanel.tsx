@@ -38,7 +38,7 @@ const FavoritesPanel = ({ isOpen, onClose }: Props) => {
       <DrawerOverlay backdropFilter="blur(3px)" />
 
       <DrawerContent
-        maxWidth={{ base: "100vm", sm: "420px" }}
+        maxWidth={{ base: "100%", sm: "420px" }}
         background="gray.50"
         _dark={{
           background: "gray.900",

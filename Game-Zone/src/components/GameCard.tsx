@@ -12,13 +12,9 @@ interface Props {
 
 const GameCard = ({ game }: Props) => {
   return (
-    <Card height="100%" minWidth={0} width="100%">
+    <Card height="100%">
       <Box position="relative">
-        <Image
-          src={getCroppedImageUrl(game.background_image)}
-          width="100%"
-          objectFit="cover"
-        />
+        <Image src={getCroppedImageUrl(game.background_image)} />
 
         <Box position="absolute" top={2} right={2}>
           <FavoriteButton gameId={game.id} />

@@ -11,7 +11,10 @@ interface Props {
 }
 
 const GameGrid = ({ data, error, isLoading }: Props) => {
-  const skeletons = Array.from({ length: 30 }, (_, index) => index + 1);
+  const skeletons = Array.from(
+    { length: 30 },
+    (_, index) => index + 1,
+  );
 
   if (error) return <Text>{error}</Text>;
 
@@ -20,8 +23,6 @@ const GameGrid = ({ data, error, isLoading }: Props) => {
       columns={{ base: 2, md: 2, lg: 3, xl: 5 }}
       padding="10px"
       spacing={6}
-      minWidth={0}
-      width="100%"
     >
       {isLoading &&
         skeletons.map((skeleton) => (
@@ -41,3 +42,4 @@ const GameGrid = ({ data, error, isLoading }: Props) => {
 };
 
 export default GameGrid;
+

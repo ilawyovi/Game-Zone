@@ -8,7 +8,7 @@ const SearchInput = ({ onSearch }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
   return (
     <form
-      style={{ width: "100%", minWidth: 0 }}
+  style={{ width: "100%", minWidth: 0, flex: 1 }}
       onSubmit={(event) => {
         event.preventDefault();
         if (ref.current) {

@@ -93,8 +93,6 @@ function App() {
 
   return (
     <Grid
-      width="100%"
-      minWidth={0}
       templateAreas={{
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
@@ -145,7 +143,11 @@ function App() {
           </Flex>
         </Box>
 
-        <GameGrid data={data} error={error} isLoading={isLoading} />
+        <GameGrid
+          data={data}
+          error={error}
+          isLoading={isLoading}
+        />
 
         <Pagination
           currentPage={gameQuery.page}
@@ -158,3 +160,4 @@ function App() {
 }
 
 export default App;
+

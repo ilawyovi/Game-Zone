@@ -1,4 +1,4 @@
-import { HStack, Image, Show } from "@chakra-ui/react";
+import { Box, HStack, Image, Show } from "@chakra-ui/react";
 import Logo from "../assets/Logo.webp";
 import ColorModeSwitch from "./ColorModeSwitch";
 import SearchInput from "./SearchInput";
@@ -19,7 +19,9 @@ const NavBar = ({ onSearch }: Props) => {
       overflow="hidden"
     >
       <Image src={Logo} boxSize="60px" flexShrink={0} />
-      <SearchInput onSearch={onSearch} />
+     <Box flex="1" minWidth={0}>
+  <SearchInput onSearch={onSearch} />
+</Box>
       <Show above="lg">
         <FavoritesButton /> <ColorModeSwitch />
       </Show>
