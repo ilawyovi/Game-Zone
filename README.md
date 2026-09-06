@@ -6,13 +6,12 @@ Game Zone allows users to discover games, search through a large game catalog, f
 
 
 
-\
 
 ---
 
 ## 🌐 Live Demo
 
-🚀 **[Open Game Zone](https://game-zone .vercel.app/)**
+🚀 **[Open Game Zone](https://game-zone7.vercel.app/)**
 
 ---
 
