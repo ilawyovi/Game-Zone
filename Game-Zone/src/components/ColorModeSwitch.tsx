@@ -1,8 +1,9 @@
 import { HStack, Switch, Text, useColorMode } from "@chakra-ui/react";
-
-const ColorModeSwitch = () => {
+interface Props {
+  showLabel?: boolean;
+}
+const ColorModeSwitch = ({ showLabel = true }: Props) => {
   const { toggleColorMode, colorMode } = useColorMode();
-
   return (
     <HStack>
       <Switch
@@ -10,9 +11,9 @@ const ColorModeSwitch = () => {
         isChecked={colorMode === "dark"}
         onChange={toggleColorMode}
       />
-      <Text whiteSpace="nowrap">Dark Mode</Text>
+
+      {showLabel && <Text whiteSpace="nowrap"> Dark Mode </Text>}
     </HStack>
   );
 };
-
 export default ColorModeSwitch;
