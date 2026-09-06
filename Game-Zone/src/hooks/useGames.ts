@@ -5,7 +5,7 @@ export interface Platform {
   id: number;
   name: string;
   slug: string;
-};
+}
 
 export interface Game {
   id: number;
@@ -26,11 +26,12 @@ const useGames = (gameQuery: GameQuery) =>
         platforms: gameQuery.platform?.id,
         ordering: gameQuery.sortOrder,
         search: gameQuery.searchText,
+        page: gameQuery.page,
         page_size: 30,
-      }
+      },
     },
-    [gameQuery]
+    [gameQuery],
   );
 
-
 export default useGames;
+

@@ -1,28 +1,100 @@
 import { Box, Flex, Grid, GridItem, Show } from "@chakra-ui/react";
+import { useState } from "react";
+
 import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
-import { useState } from "react";
-import type { Genre } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
-import type { Platform } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
 import GameHeading from "./components/GameHeading";
 import MobileGenreSelector from "./components/MobileGenreSelector";
 import SidebarRecommendations from "./components/SidebarRecommendations";
 import ResetFilters from "./components/ResetFilters";
+import Pagination from "./components/Pagination";
+
+import type { Genre } from "./hooks/useGenres";
+import type { Platform } from "./hooks/useGames";
+import useGames from "./hooks/useGames";
 
 export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
   sortOrder: string;
-  searchText: String;
+  searchText: string;
+  page: number;
 }
 
 function App() {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+  const [gameQuery, setGameQuery] = useState<GameQuery>({
+    genre: null,
+    platform: null,
+    sortOrder: "",
+    searchText: "",
+    page: 1,
+  });
+
+  const { data, count, error, isLoading } = useGames(gameQuery);
+
+  const totalPages = Math.ceil(count / 30);
+
+  const updateQuery = (changes: Partial<GameQuery>) => {
+    setGameQuery((currentQuery) => ({
+      ...currentQuery,
+      ...changes,
+    }));
+  };
+
+  const handlePageChange = (page: number) => {
+    updateQuery({ page });
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleSearch = (searchText: string) => {
+    updateQuery({
+      searchText,
+      page: 1,
+    });
+  };
+
+  const handleGenreChange = (genre: Genre) => {
+    updateQuery({
+      genre,
+      page: 1,
+    });
+  };
+
+  const handlePlatformChange = (platform: Platform) => {
+    updateQuery({
+      platform,
+      page: 1,
+    });
+  };
+
+  const handleSortChange = (sortOrder: string) => {
+    updateQuery({
+      sortOrder,
+      page: 1,
+    });
+  };
+
+  const handleReset = () => {
+    setGameQuery({
+      genre: null,
+      platform: null,
+      sortOrder: "",
+      searchText: "",
+      page: 1,
+    });
+  };
+
   return (
     <Grid
+      width="100%"
+      minWidth={0}
       templateAreas={{
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
@@ -33,18 +105,14 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar
-          onSearch={(SearchText) =>
-            setGameQuery({ ...gameQuery, searchText: SearchText })
-          }
-        />
+        <NavBar onSearch={handleSearch} />
       </GridItem>
 
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <GenreList
             selectedGenre={gameQuery.genre}
-            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
+            onSelectGenre={handleGenreChange}
           />
 
           <SidebarRecommendations />
@@ -54,41 +122,36 @@ function App() {
       <GridItem area="main">
         <Box paddingLeft={2}>
           <GameHeading gameQuery={gameQuery} />
+
           <Flex marginBottom={5} gap={3}>
             <Show below="lg">
               <MobileGenreSelector
                 selectedGenre={gameQuery.genre}
-                onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
+                onSelectGenre={handleGenreChange}
               />
             </Show>
 
             <PlatformSelector
               selectedPlatform={gameQuery.platform}
-              onSelectPlatform={(platform) =>
-                setGameQuery({ ...gameQuery, platform })
-              }
+              onSelectPlatform={handlePlatformChange}
             />
 
             <SortSelector
               sortOrder={gameQuery.sortOrder}
-              onSelectSortOrder={(sortOrder) =>
-                setGameQuery({ ...gameQuery, sortOrder })
-              }
+              onSelectSortOrder={handleSortChange}
             />
-            <ResetFilters
-              onReset={() =>
-                setGameQuery({
-                  genre: null,
-                  platform: null,
-                  sortOrder: "",
-                  searchText: "",
-                })
-              }
-            />
+
+            <ResetFilters onReset={handleReset} />
           </Flex>
         </Box>
 
-        <GameGrid gameQuery={gameQuery} />
+        <GameGrid data={data} error={error} isLoading={isLoading} />
+
+        <Pagination
+          currentPage={gameQuery.page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </GridItem>
     </Grid>
   );

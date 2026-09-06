@@ -7,8 +7,13 @@ interface FetchResponse<T> {
   results: T[];
 }
 
-const useData = <T>(endpoint: string, requestConfig?: AxiosRequestConfig, deps?: any[]) => {
-  const [data, setdata] = useState<T[]>([]);
+const useData = <T>(
+  endpoint: string,
+  requestConfig?: AxiosRequestConfig,
+  deps?: any[],
+) => {
+  const [data, setData] = useState<T[]>([]);
+  const [count, setCount] = useState(0);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -16,22 +21,35 @@ const useData = <T>(endpoint: string, requestConfig?: AxiosRequestConfig, deps?:
     const controller = new AbortController();
 
     setLoading(true);
+    setError("");
+
     apiClient
-      .get<FetchResponse<T>>(endpoint, { signal: controller.signal, ...requestConfig })
+      .get<FetchResponse<T>>(endpoint, {
+        signal: controller.signal,
+        ...requestConfig,
+      })
       .then((res) => {
-        setdata(res.data.results);
+        setData(res.data.results);
+        setCount(res.data.count);
         setLoading(false);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
-        setError(err.message)
+
+        setError(err.message);
         setLoading(false);
       });
 
     return () => controller.abort();
   }, deps ? [...deps] : []);
 
-  return { data, error, isLoading };
+  return {
+    data,
+    count,
+    error,
+    isLoading,
+  };
 };
 
 export default useData;
+
