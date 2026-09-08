@@ -25,8 +25,12 @@ import {
 } from "react-router-dom";
 
 import useGameDetails from "../hooks/useGameDetails";
+import GameTrailer from "../components/GameTrailer";
+import GameDescription from "../components/GameDescription";
+import ScreenshotGallery from "../components/ScreenshotGallery";
 import GameDetailsSkeleton from "../components/GameDetailsSkeleton";
 import FavoriteButton from "../components/FavoriteButton";
+import SimilarGames from "../components/SimilarGames";
 
 function GameDetailsPage() {
   const { slug } = useParams();
@@ -86,20 +90,24 @@ function GameDetailsPage() {
     : "Unknown";
 
   const developers = game.developers
-    .map((developer) => developer.name)
+    ?.map((developer) => developer.name)
     .join(", ");
 
   const publishers = game.publishers
-    .map((publisher) => publisher.name)
+    ?.map((publisher) => publisher.name)
     .join(", ");
 
   const platforms = game.platforms
-    .map((platform) => platform.platform.name)
+    ?.map((platform) => platform.platform.name)
     .join(", ");
+
+  const similarGenreId = game.genres?.[0]?.id;
+
+  const similarPlatformId =
+    game.platforms?.[0]?.platform.id;
 
   return (
     <Box>
-      {/* Hero */}
       <Box
         position="relative"
         minHeight={{
@@ -135,7 +143,6 @@ function GameDetailsPage() {
 
         <Box
           position="relative"
-          height="100%"
           minHeight={{
             base: "420px",
             md: "520px",
@@ -149,7 +156,6 @@ function GameDetailsPage() {
             lg: 12,
           }}
         >
-          {/* Favorite */}
           <Box
             position="absolute"
             top={{
@@ -172,7 +178,6 @@ function GameDetailsPage() {
             maxWidth="1200px"
             margin="0 auto"
           >
-            {/* Back */}
             <Button
               as={RouterLink}
               to="/"
@@ -188,7 +193,6 @@ function GameDetailsPage() {
               Back to Games
             </Button>
 
-            {/* Title */}
             <Heading
               color="white"
               fontSize={{
@@ -202,7 +206,6 @@ function GameDetailsPage() {
               {game.name}
             </Heading>
 
-            {/* Hero Ratings */}
             <HStack
               marginTop={5}
               spacing={3}
@@ -270,9 +273,7 @@ function GameDetailsPage() {
             lg: 12,
           }}
         >
-         
           <Box>
-         
             <Heading
               size="lg"
               marginBottom={4}
@@ -280,19 +281,12 @@ function GameDetailsPage() {
               About {game.name}
             </Heading>
 
-            <Text
-              color="gray.500"
-              lineHeight="1.9"
-              dangerouslySetInnerHTML={{
-                __html:
-                  game.description ||
-                  "No description available.",
-              }}
+            <GameDescription
+              description={game.description}
             />
 
             <Divider marginY={8} />
 
-            {/* Game Information */}
             <Heading
               size="lg"
               marginBottom={5}
@@ -314,23 +308,17 @@ function GameDetailsPage() {
 
               <InfoItem
                 label="Developer"
-                value={
-                  developers || "Unknown"
-                }
+                value={developers || "Unknown"}
               />
 
               <InfoItem
                 label="Publisher"
-                value={
-                  publishers || "Unknown"
-                }
+                value={publishers || "Unknown"}
               />
 
               <InfoItem
                 label="Platforms"
-                value={
-                  platforms || "Unknown"
-                }
+                value={platforms || "Unknown"}
               />
 
               <InfoItem
@@ -351,7 +339,41 @@ function GameDetailsPage() {
               />
             </SimpleGrid>
 
-            {game.genres.length > 0 && (
+            {game.short_screenshots?.length > 0 && (
+              <>
+                <Divider marginY={8} />
+
+                <Heading
+                  size="lg"
+                  marginBottom={5}
+                >
+                  Screenshots
+                </Heading>
+
+                <ScreenshotGallery
+                  screenshots={game.short_screenshots}
+                />
+              </>
+            )}
+
+            {game.movies?.length > 0 && (
+              <>
+                <Divider marginY={8} />
+
+                <Heading
+                  size="lg"
+                  marginBottom={5}
+                >
+                  Trailer
+                </Heading>
+
+                <GameTrailer
+                  movie={game.movies[0]}
+                />
+              </>
+            )}
+
+            {game.genres?.length > 0 && (
               <>
                 <Divider marginY={8} />
 
@@ -384,7 +406,6 @@ function GameDetailsPage() {
 
           <Box>
             <Stack spacing={5}>
-        
               {game.website && (
                 <Button
                   as={Link}
@@ -400,7 +421,6 @@ function GameDetailsPage() {
                 </Button>
               )}
 
-              {/* Ratings */}
               <Box
                 borderWidth="1px"
                 borderRadius="xl"
@@ -437,8 +457,7 @@ function GameDetailsPage() {
                 </Stack>
               </Box>
 
-              {/* Stores */}
-              {game.stores.length > 0 && (
+              {game.stores?.length > 0 && (
                 <Box
                   borderWidth="1px"
                   borderRadius="xl"
@@ -452,34 +471,46 @@ function GameDetailsPage() {
                   </Heading>
 
                   <Stack spacing={3}>
-                    {game.stores.map(
-                      (item) => (
-                        <Button
-                          key={item.id}
-                          as={Link}
-                          href={item.url}
-                          isExternal
-                          variant="outline"
-                          justifyContent="space-between"
-                          rightIcon={
-                            <ExternalLinkIcon />
-                          }
-                        >
-                          {item.store.name}
-                        </Button>
-                      ),
-                    )}
+                    {game.stores.map((item) => (
+                      <Button
+                        key={item.id}
+                        as={Link}
+                        href={item.url}
+                        isExternal
+                        variant="outline"
+                        justifyContent="space-between"
+                        rightIcon={
+                          <ExternalLinkIcon />
+                        }
+                      >
+                        {item.store.name}
+                      </Button>
+                    ))}
                   </Stack>
                 </Box>
               )}
             </Stack>
           </Box>
         </Grid>
+
+        <Box
+          marginTop={{
+            base: 10,
+            md: 12,
+            lg: 16,
+          }}
+          width="100%"
+        >
+          <SimilarGames
+            gameId={game.id}
+            genreId={similarGenreId}
+            platformId={similarPlatformId}
+          />
+        </Box>
       </Box>
     </Box>
   );
 }
-
 
 interface InfoItemProps {
   label: string;
