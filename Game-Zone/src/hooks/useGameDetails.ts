@@ -73,6 +73,21 @@ export interface GameDetails {
     };
   }[];
 
+  short_screenshots: {
+    id: number;
+    image: string;
+  }[];
+  
+  movies: {
+    id: number;
+    name: string;
+    preview: string;
+    data: {
+      480?: string;
+      max?: string;
+    };
+  }[];
+
   tags: {
     id: number;
     name: string;
@@ -107,8 +122,8 @@ const useGameDetails = (slug: string | undefined) => {
 
         setError(
           err?.response?.data?.detail ||
-            err?.message ||
-            "Failed to load game details.",
+          err?.message ||
+          "Failed to load game details.",
         );
 
         setLoading(false);

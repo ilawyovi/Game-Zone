@@ -13,12 +13,13 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-
-import GameDescription from "../components/GameDescription";
 import { ArrowBackIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import useGameDetails from "../hooks/useGameDetails";
+import GameTrailer from "../components/GameTrailer";
+import GameDescription from "../components/GameDescription";
+import ScreenshotGallery from "../components/ScreenshotGallery";
 import GameDetailsSkeleton from "../components/GameDetailsSkeleton";
 
 function GameDetailsPage() {
@@ -30,7 +31,12 @@ function GameDetailsPage() {
   if (error) {
     return (
       <Box padding={{ base: 4, md: 6, lg: 8 }}>
-        <VStack minHeight="60vh" justifyContent="center" textAlign="center" spacing={4}>
+        <VStack
+          minHeight="60vh"
+          justifyContent="center"
+          textAlign="center"
+          spacing={4}
+        >
           <Heading size="lg">Something went wrong</Heading>
           <Text color="gray.500">{error}</Text>
           <Button as={RouterLink} to="/" leftIcon={<ArrowBackIcon />}>
@@ -51,13 +57,25 @@ function GameDetailsPage() {
       })
     : "Unknown";
 
-  const developers = game.developers.map((developer) => developer.name).join(", ");
-  const publishers = game.publishers.map((publisher) => publisher.name).join(", ");
-  const platforms = game.platforms.map((platform) => platform.platform.name).join(", ");
+  const developers = game.developers
+    .map((developer) => developer.name)
+    .join(", ");
+
+  const publishers = game.publishers
+    .map((publisher) => publisher.name)
+    .join(", ");
+
+  const platforms = game.platforms
+    .map((platform) => platform.platform.name)
+    .join(", ");
 
   return (
     <Box>
-      <Box position="relative" minHeight={{ base: "420px", md: "520px", lg: "620px" }} overflow="hidden">
+      <Box
+        position="relative"
+        minHeight={{ base: "420px", md: "520px", lg: "620px" }}
+        overflow="hidden"
+      >
         <Image
           src={game.background_image_additional || game.background_image}
           alt={game.name}
@@ -76,7 +94,6 @@ function GameDetailsPage() {
 
         <Box
           position="relative"
-          height="100%"
           minHeight={{ base: "420px", md: "520px", lg: "620px" }}
           display="flex"
           alignItems="flex-end"
@@ -124,11 +141,23 @@ function GameDetailsPage() {
                 </Badge>
               )}
 
-              <Badge colorScheme="purple" fontSize="md" paddingX={3} paddingY={1} borderRadius="md">
+              <Badge
+                colorScheme="purple"
+                fontSize="md"
+                paddingX={3}
+                paddingY={1}
+                borderRadius="md"
+              >
                 ⭐ {game.rating.toFixed(1)}
               </Badge>
 
-              <Badge colorScheme="blue" fontSize="md" paddingX={3} paddingY={1} borderRadius="md">
+              <Badge
+                colorScheme="blue"
+                fontSize="md"
+                paddingX={3}
+                paddingY={1}
+                borderRadius="md"
+              >
                 {game.ratings_count.toLocaleString()} ratings
               </Badge>
             </HStack>
@@ -136,14 +165,21 @@ function GameDetailsPage() {
         </Box>
       </Box>
 
-      <Box maxWidth="1200px" margin="0 auto" padding={{ base: 5, md: 8, lg: 10 }}>
-        <Grid templateColumns={{ base: "1fr", lg: "2fr 1fr" }} gap={{ base: 8, lg: 12 }}>
+      <Box
+        maxWidth="1200px"
+        margin="0 auto"
+        padding={{ base: 5, md: 8, lg: 10 }}
+      >
+        <Grid
+          templateColumns={{ base: "1fr", lg: "2fr 1fr" }}
+          gap={{ base: 8, lg: 12 }}
+        >
           <Box>
             <Heading size="lg" marginBottom={4}>
               About {game.name}
             </Heading>
 
-           <GameDescription description={game.description} />
+            <GameDescription description={game.description} />
 
             <Divider marginY={8} />
 
@@ -156,9 +192,39 @@ function GameDetailsPage() {
               <InfoItem label="Developer" value={developers || "Unknown"} />
               <InfoItem label="Publisher" value={publishers || "Unknown"} />
               <InfoItem label="Platforms" value={platforms || "Unknown"} />
-              <InfoItem label="Playtime" value={game.playtime ? `${game.playtime} hours` : "Unknown"} />
-              <InfoItem label="ESRB" value={game.esrb_rating?.name || "Not Rated"} />
+              <InfoItem
+                label="Playtime"
+                value={game.playtime ? `${game.playtime} hours` : "Unknown"}
+              />
+              <InfoItem
+                label="ESRB"
+                value={game.esrb_rating?.name || "Not Rated"}
+              />
             </SimpleGrid>
+
+            {game.short_screenshots.length > 0 && (
+              <>
+                <Divider marginY={8} />
+
+                <Heading size="lg" marginBottom={5}>
+                  Screenshots
+                </Heading>
+
+                <ScreenshotGallery screenshots={game.short_screenshots} />
+              </>
+            )}
+
+            {game.movies.length > 0 && (
+              <>
+                <Divider marginY={8} />
+
+                <Heading size="lg" marginBottom={5}>
+                  Trailer
+                </Heading>
+
+                <GameTrailer movie={game.movies[0]} />
+              </>
+            )}
 
             {game.genres.length > 0 && (
               <>
@@ -170,7 +236,13 @@ function GameDetailsPage() {
 
                 <HStack spacing={3} flexWrap="wrap">
                   {game.genres.map((genre) => (
-                    <Badge key={genre.id} paddingX={3} paddingY={2} borderRadius="md" fontSize="sm">
+                    <Badge
+                      key={genre.id}
+                      paddingX={3}
+                      paddingY={2}
+                      borderRadius="md"
+                      fontSize="sm"
+                    >
                       {genre.name}
                     </Badge>
                   ))}
@@ -200,11 +272,23 @@ function GameDetailsPage() {
                 </Heading>
 
                 <Stack spacing={5}>
-                  <RatingItem label="RAWG Rating" value={`${game.rating.toFixed(1)} / 5`} />
-                  <RatingItem label="Ratings Count" value={game.ratings_count.toLocaleString()} />
+                  <RatingItem
+                    label="RAWG Rating"
+                    value={`${game.rating.toFixed(1)} / 5`}
+                  />
+
+                  <RatingItem
+                    label="Ratings Count"
+                    value={game.ratings_count.toLocaleString()}
+                  />
+
                   <RatingItem
                     label="Metacritic"
-                    value={game.metacritic !== null ? `${game.metacritic} / 100` : "N/A"}
+                    value={
+                      game.metacritic !== null
+                        ? `${game.metacritic} / 100`
+                        : "N/A"
+                    }
                   />
                 </Stack>
               </Box>
