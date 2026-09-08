@@ -117,11 +117,13 @@ function App() {
         </GridItem>
       </Show>
 
+      {/* <GridItem area="main" minWidth={0}>
+        <Box paddingX={2}> */}
       <GridItem area="main">
         <Box paddingLeft={2}>
           <GameHeading gameQuery={gameQuery} />
 
-          <Flex marginBottom={5} gap={3}>
+          <Flex marginBottom={5} gap={3} flexWrap="wrap">
             <Show below="lg">
               <MobileGenreSelector
                 selectedGenre={gameQuery.genre}
@@ -143,11 +145,7 @@ function App() {
           </Flex>
         </Box>
 
-        <GameGrid
-          data={data}
-          error={error}
-          isLoading={isLoading}
-        />
+        <GameGrid data={data} error={error} isLoading={isLoading} />
 
         <Pagination
           currentPage={gameQuery.page}
@@ -160,4 +158,3 @@ function App() {
 }
 
 export default App;
-
