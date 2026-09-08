@@ -11,6 +11,7 @@ import MobileGenreSelector from "./components/MobileGenreSelector";
 import SidebarRecommendations from "./components/SidebarRecommendations";
 import ResetFilters from "./components/ResetFilters";
 import Pagination from "./components/Pagination";
+import MobileFilters from "./components/MobileFilters";
 
 import type { Genre } from "./hooks/useGenres";
 import type { Platform } from "./hooks/useGames";
@@ -117,20 +118,23 @@ function App() {
         </GridItem>
       </Show>
 
-      {/* <GridItem area="main" minWidth={0}>
-        <Box paddingX={2}> */}
       <GridItem area="main">
         <Box paddingLeft={2}>
           <GameHeading gameQuery={gameQuery} />
 
-          <Flex marginBottom={5} gap={3} flexWrap="wrap">
-            <Show below="lg">
-              <MobileGenreSelector
-                selectedGenre={gameQuery.genre}
-                onSelectGenre={handleGenreChange}
-              />
-            </Show>
+          <Box display={{ base: "block", md: "none" }}>
+            <MobileFilters
+              selectedGenre={gameQuery.genre}
+              selectedPlatform={gameQuery.platform}
+              sortOrder={gameQuery.sortOrder}
+              onSelectGenre={handleGenreChange}
+              onSelectPlatform={handlePlatformChange}
+              onSelectSortOrder={handleSortChange}
+              onReset={handleReset}
+            />
+          </Box>
 
+          <Flex display={{ base: "none", md: "flex" }} marginBottom={5} gap={3}>
             <PlatformSelector
               selectedPlatform={gameQuery.platform}
               onSelectPlatform={handlePlatformChange}
