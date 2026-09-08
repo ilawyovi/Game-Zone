@@ -115,6 +115,8 @@ function HomePage({ onSearch }: Props) {
                 params.get("publisherName") || "",
             }
           : null,
+      sortOrder:
+        params.get("sortOrder") || "",
     };
   };
 
@@ -152,17 +154,18 @@ function HomePage({ onSearch }: Props) {
       location.search,
     );
 
-    params.delete("genre");
-    params.delete("genreName");
-    params.delete("platform");
-    params.delete("platformName");
-    params.delete("developer");
-    params.delete("developerName");
-    params.delete("publisher");
-    params.delete("publisherName");
-
     params.set(type, String(id));
     params.set(`${type}Name`, name);
+
+    if (type === "developer") {
+      params.delete("publisher");
+      params.delete("publisherName");
+    }
+
+    if (type === "publisher") {
+      params.delete("developer");
+      params.delete("developerName");
+    }
 
     params.delete("page");
 
@@ -199,9 +202,6 @@ function HomePage({ onSearch }: Props) {
   ) => {
     updateQuery({
       genre,
-      platform: null,
-      developer: null,
-      publisher: null,
       page: 1,
     });
 
@@ -217,9 +217,6 @@ function HomePage({ onSearch }: Props) {
   ) => {
     updateQuery({
       platform,
-      genre: null,
-      developer: null,
-      publisher: null,
       page: 1,
     });
 
@@ -235,8 +232,6 @@ function HomePage({ onSearch }: Props) {
   ) => {
     updateQuery({
       developer,
-      genre: null,
-      platform: null,
       publisher: null,
       page: 1,
     });
@@ -253,8 +248,6 @@ function HomePage({ onSearch }: Props) {
   ) => {
     updateQuery({
       publisher,
-      genre: null,
-      platform: null,
       developer: null,
       page: 1,
     });
@@ -272,6 +265,25 @@ function HomePage({ onSearch }: Props) {
     updateQuery({
       sortOrder,
       page: 1,
+    });
+
+    const params = new URLSearchParams(
+      location.search,
+    );
+
+    if (sortOrder) {
+      params.set("sortOrder", sortOrder);
+    } else {
+      params.delete("sortOrder");
+    }
+
+    params.delete("page");
+
+    navigate({
+      pathname: "/",
+      search: params.toString()
+        ? `?${params.toString()}`
+        : "",
     });
   };
 

@@ -7,6 +7,12 @@ export interface Game {
   slug: string;
   name: string;
   background_image: string;
+  released: string | null;
+  genres: {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
   parent_platforms: { platform: Platform }[];
   metacritic: number | null;
   rating: number;
