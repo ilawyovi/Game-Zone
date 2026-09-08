@@ -5,30 +5,38 @@ import NavBar from "../components/NavBar";
 import GameGrid from "../components/GameGrid";
 import GenreList from "../components/GenreList";
 import PlatformSelector from "../components/PlatformSelector";
+import DeveloperSelector from "../components/DeveloperSelector";
+import PublisherSelector from "../components/PublisherSelector";
 import SortSelector from "../components/SortSelector";
 import GameHeading from "../components/GameHeading";
 import SidebarRecommendations from "../components/SidebarRecommendations";
 import ResetFilters from "../components/ResetFilters";
 import Pagination from "../components/Pagination";
 import MobileFilters from "../components/MobileFilters";
+
 import useGames from "../hooks/useGames";
 import type { Genre } from "../hooks/useGenres";
 import type { Platform } from "../types/platform";
+import type { Developer } from "../types/developer";
+import type { Publisher } from "../types/publisher";
 import type { GameQuery } from "../types/game";
-
 
 interface Props {
   onSearch: (searchText: string) => void;
 }
 
+const initialQuery: GameQuery = {
+  genre: null,
+  platform: null,
+  developer: null,
+  publisher: null,
+  sortOrder: "",
+  searchText: "",
+  page: 1,
+};
+
 function HomePage({ onSearch }: Props) {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({
-    genre: null,
-    platform: null,
-    sortOrder: "",
-    searchText: "",
-    page: 1,
-  });
+  const [gameQuery, setGameQuery] = useState<GameQuery>(initialQuery);
 
   const { data, count, error, isLoading } = useGames(gameQuery);
 
@@ -73,6 +81,20 @@ function HomePage({ onSearch }: Props) {
     });
   };
 
+  const handleDeveloperChange = (developer: Developer) => {
+    updateQuery({
+      developer,
+      page: 1,
+    });
+  };
+
+  const handlePublisherChange = (publisher: Publisher) => {
+    updateQuery({
+      publisher,
+      page: 1,
+    });
+  };
+
   const handleSortChange = (sortOrder: string) => {
     updateQuery({
       sortOrder,
@@ -82,12 +104,11 @@ function HomePage({ onSearch }: Props) {
 
   const handleReset = () => {
     setGameQuery({
-      genre: null,
-      platform: null,
-      sortOrder: "",
+      ...initialQuery,
       searchText: "",
-      page: 1,
     });
+
+    onSearch("");
   };
 
   return (
@@ -105,6 +126,7 @@ function HomePage({ onSearch }: Props) {
         <NavBar onSearch={handleSearch} />
       </GridItem>
 
+      {/* Desktop Sidebar */}
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <GenreList
@@ -120,26 +142,43 @@ function HomePage({ onSearch }: Props) {
         <Box paddingLeft={2}>
           <GameHeading gameQuery={gameQuery} />
 
-          <Box display={{ base: "block", md: "none" }}>
+          {/* Tablet + Mobile */}
+          <Box display={{ base: "block", lg: "none" }}>
             <MobileFilters
               selectedGenre={gameQuery.genre}
               selectedPlatform={gameQuery.platform}
+              selectedDeveloper={gameQuery.developer}
+              selectedPublisher={gameQuery.publisher}
               sortOrder={gameQuery.sortOrder}
               onSelectGenre={handleGenreChange}
               onSelectPlatform={handlePlatformChange}
+              onSelectDeveloper={handleDeveloperChange}
+              onSelectPublisher={handlePublisherChange}
               onSelectSortOrder={handleSortChange}
               onReset={handleReset}
             />
           </Box>
 
+          {/* Desktop Filters */}
           <Flex
-            display={{ base: "none", md: "flex" }}
+            display={{ base: "none", lg: "flex" }}
             marginBottom={5}
             gap={3}
+            flexWrap="wrap"
           >
             <PlatformSelector
               selectedPlatform={gameQuery.platform}
               onSelectPlatform={handlePlatformChange}
+            />
+
+            <DeveloperSelector
+              selectedDeveloper={gameQuery.developer}
+              onSelectDeveloper={handleDeveloperChange}
+            />
+
+            <PublisherSelector
+              selectedPublisher={gameQuery.publisher}
+              onSelectPublisher={handlePublisherChange}
             />
 
             <SortSelector

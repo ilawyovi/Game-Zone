@@ -21,6 +21,7 @@ import GameTrailer from "../components/GameTrailer";
 import GameDescription from "../components/GameDescription";
 import ScreenshotGallery from "../components/ScreenshotGallery";
 import GameDetailsSkeleton from "../components/GameDetailsSkeleton";
+import FavoriteButton from "../components/FavoriteButton";
 
 function GameDetailsPage() {
   const { slug } = useParams();
@@ -99,7 +100,12 @@ function GameDetailsPage() {
           alignItems="flex-end"
           padding={{ base: 5, md: 8, lg: 12 }}
         >
-          <Box width="100%" maxWidth="1200px" margin="0 auto">
+          <Box
+            width="100%"
+            maxWidth="1200px"
+            margin="0 auto"
+            position="relative"
+          >
             <Button
               as={RouterLink}
               to="/"
@@ -113,11 +119,16 @@ function GameDetailsPage() {
               Back to Games
             </Button>
 
+            <Box position="absolute" top={0} right={{ base: 0, md: 2 }}>
+              <FavoriteButton gameId={game.id} />
+            </Box>
+
             <Heading
               color="white"
               fontSize={{ base: "3xl", md: "5xl", lg: "6xl" }}
               lineHeight="1.05"
               maxWidth="900px"
+              paddingRight={{ base: "55px", md: 0 }}
             >
               {game.name}
             </Heading>

@@ -2,7 +2,6 @@ import type { GameQuery } from "../types/game";
 import type { Platform } from "../types/platform";
 import useData from "./useData";
 
-
 export interface Game {
   id: number;
   slug: string;
@@ -21,6 +20,8 @@ const useGames = (gameQuery: GameQuery) =>
       params: {
         genres: gameQuery.genre?.id,
         platforms: gameQuery.platform?.id,
+        developers: gameQuery.developer?.id,
+        publishers: gameQuery.publisher?.id,
         ordering: gameQuery.sortOrder,
         search: gameQuery.searchText,
         page: gameQuery.page,
@@ -31,4 +32,3 @@ const useGames = (gameQuery: GameQuery) =>
   );
 
 export default useGames;
-
