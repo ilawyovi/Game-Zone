@@ -8,7 +8,7 @@ import SortSelector from "./SortSelector";
 import ResetFilters from "./ResetFilters";
 
 import type { Genre } from "../hooks/useGenres";
-import type { Platform } from "../hooks/useGames";
+import type { Platform } from "../types/platform";
 
 interface Props {
   selectedGenre: Genre | null;
