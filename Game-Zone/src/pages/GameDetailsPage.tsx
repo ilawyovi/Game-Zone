@@ -89,19 +89,8 @@ function GameDetailsPage() {
       )
     : "Unknown";
 
-  const developers = game.developers
-    ?.map((developer) => developer.name)
-    .join(", ");
-
-  const publishers = game.publishers
-    ?.map((publisher) => publisher.name)
-    .join(", ");
-
-  const platforms = game.platforms
-    ?.map((platform) => platform.platform.name)
-    .join(", ");
-
-  const similarGenreId = game.genres?.[0]?.id;
+  const similarGenreId =
+    game.genres?.[0]?.id;
 
   const similarPlatformId =
     game.platforms?.[0]?.platform.id;
@@ -246,8 +235,7 @@ function GameDetailsPage() {
                 paddingY={1}
                 borderRadius="md"
               >
-                {game.ratings_count.toLocaleString()}{" "}
-                ratings
+                {game.ratings_count.toLocaleString()} ratings
               </Badge>
             </HStack>
           </Box>
@@ -308,17 +296,107 @@ function GameDetailsPage() {
 
               <InfoItem
                 label="Developer"
-                value={developers || "Unknown"}
+                value={
+                  game.developers?.length
+                    ? game.developers.map(
+                        (developer) => (
+                          <RouterLink
+                            key={developer.id}
+                            to={`/?developer=${developer.id}&developerName=${encodeURIComponent(developer.name)}`}
+                            style={{
+                              textDecoration:
+                                "none",
+                            }}
+                          >
+                            <Text
+                              as="span"
+                              _hover={{
+                                color:
+                                  "orange.400",
+                                textDecoration:
+                                  "underline",
+                              }}
+                            >
+                              {developer.name}
+                            </Text>
+                          </RouterLink>
+                        ),
+                      )
+                    : "Unknown"
+                }
               />
 
               <InfoItem
                 label="Publisher"
-                value={publishers || "Unknown"}
+                value={
+                  game.publishers?.length
+                    ? game.publishers.map(
+                        (publisher) => (
+                          <RouterLink
+                            key={publisher.id}
+                            to={`/?publisher=${publisher.id}&publisherName=${encodeURIComponent(publisher.name)}`}
+                            style={{
+                              textDecoration:
+                                "none",
+                              marginRight:
+                                "6px",
+                            }}
+                          >
+                            <Text
+                              as="span"
+                              _hover={{
+                                color:
+                                  "orange.400",
+                                textDecoration:
+                                  "underline",
+                              }}
+                            >
+                              {publisher.name}
+                            </Text>
+                          </RouterLink>
+                        ),
+                      )
+                    : "Unknown"
+                }
               />
 
               <InfoItem
                 label="Platforms"
-                value={platforms || "Unknown"}
+                value={
+                  game.platforms?.length
+                    ? game.platforms.map(
+                        (item) => (
+                          <RouterLink
+                            key={
+                              item.platform.id
+                            }
+                            to={`/?platform=${item.platform.id}&platformName=${encodeURIComponent(item.platform.name)}`}
+                            style={{
+                              textDecoration:
+                                "none",
+                              marginRight:
+                                "6px",
+                            }}
+                          >
+                            <Text
+                              as="span"
+                              _hover={{
+                                color:
+                                  "orange.400",
+                                textDecoration:
+                                  "underline",
+                              }}
+                            >
+                              {
+                                item.platform
+                                  .name
+                              }
+                            </Text>
+                          </RouterLink>
+                        ),
+                      )
+                    : "Unknown"
+                }
               />
 
               <InfoItem
@@ -351,7 +429,9 @@ function GameDetailsPage() {
                 </Heading>
 
                 <ScreenshotGallery
-                  screenshots={game.short_screenshots}
+                  screenshots={
+                    game.short_screenshots
+                  }
                 />
               </>
             )}
@@ -389,15 +469,30 @@ function GameDetailsPage() {
                   flexWrap="wrap"
                 >
                   {game.genres.map((genre) => (
-                    <Badge
+                    <RouterLink
                       key={genre.id}
-                      paddingX={3}
-                      paddingY={2}
-                      borderRadius="md"
-                      fontSize="sm"
+                      to={`/?genre=${genre.id}&genreName=${encodeURIComponent(genre.name)}`}
+                      style={{
+                        textDecoration:
+                          "none",
+                      }}
                     >
-                      {genre.name}
-                    </Badge>
+                      <Badge
+                        paddingX={3}
+                        paddingY={2}
+                        borderRadius="md"
+                        fontSize="sm"
+                        cursor="pointer"
+                        transition="all 0.2s"
+                        _hover={{
+                          color: "orange.400",
+                          transform:
+                            "translateY(-2px)",
+                        }}
+                      >
+                        {genre.name}
+                      </Badge>
+                    </RouterLink>
                   ))}
                 </HStack>
               </>
@@ -514,7 +609,9 @@ function GameDetailsPage() {
 
 interface InfoItemProps {
   label: string;
-  value: string;
+  value:
+    | string
+    | React.ReactNode[];
 }
 
 function InfoItem({
