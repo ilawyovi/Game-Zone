@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 
 import GameCard from "./GameCard";
-import useSimilarGames from "../hooks/useSimilarGames";
+import useSimilarGames from "../../hooks/useSimilarGames";
 
 interface Props {
   gameId: number;

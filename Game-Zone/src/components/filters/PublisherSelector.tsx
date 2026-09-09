@@ -7,8 +7,8 @@ import {
 } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 
-import usePublishers from "../hooks/usePublishers";
-import type { Publisher } from "../types/publisher";
+import usePublishers from "../../hooks/usePublishers";
+import type { Publisher } from "../../types/publisher";
 
 interface Props {
   onSelectPublisher: (publisher: Publisher) => void;

@@ -9,12 +9,12 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-import type { Game } from "../hooks/useGames";
+import type { Game } from "../../hooks/useGames";
 
 import PlatformIconList from "./PlatformIconList";
-import CriticScore from "./CriticScore";
-import getCroppedImageUrl from "../services/image-url";
-import FavoriteButton from "./FavoriteButton";
+import CriticScore from "../ui/CriticScore";
+import getCroppedImageUrl from "../../services/image-url";
+import FavoriteButton from "../favorites/FavoriteButton";
 
 interface Props {
   game: Game;

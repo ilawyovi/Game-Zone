@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import useSidebarGames from "../hooks/useSidebarGames";
+import useSidebarGames from "../../hooks/useSidebarGames";
 import SidebarGameItem from "./SidebarGameItem";
 
 type OpenSection = "popular" | "topRated" | "recommended" | null;

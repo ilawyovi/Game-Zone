@@ -1,4 +1,4 @@
-import useGenres from "../hooks/useGenres";
+import useGenres from "../../hooks/useGenres";
 import {
   HStack,
   Image,
@@ -8,8 +8,8 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { SkeletonText, SkeletonCircle } from "@chakra-ui/react";
-import getCroppedImageUrl from "../services/image-url";
-import type { Genre } from "../hooks/useGenres";
+import getCroppedImageUrl from "../../services/image-url";
+import type { Genre } from "../../hooks/useGenres";
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;

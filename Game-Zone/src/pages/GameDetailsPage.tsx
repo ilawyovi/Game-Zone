@@ -25,12 +25,12 @@ import {
 } from "react-router-dom";
 
 import useGameDetails from "../hooks/useGameDetails";
-import GameTrailer from "../components/GameTrailer";
-import GameDescription from "../components/GameDescription";
-import ScreenshotGallery from "../components/ScreenshotGallery";
-import GameDetailsSkeleton from "../components/GameDetailsSkeleton";
-import FavoriteButton from "../components/FavoriteButton";
-import SimilarGames from "../components/SimilarGames";
+import GameTrailer from "../components/games/GameTrailer";
+import GameDescription from "../components/games/GameDescription";
+import ScreenshotGallery from "../components/games/ScreenshotGallery";
+import GameDetailsSkeleton from "../components/games/GameDetailsSkeleton";
+import FavoriteButton from "../components/favorites/FavoriteButton";
+import SimilarGames from "../components/games/SimilarGames";
 
 function GameDetailsPage() {
   const { slug } = useParams();

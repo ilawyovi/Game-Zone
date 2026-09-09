@@ -7,8 +7,8 @@ import {
 } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 
-import useDevelopers from "../hooks/useDevelopers";
-import type { Developer } from "../types/developer";
+import useDevelopers from "../../hooks/useDevelopers";
+import type { Developer } from "../../types/developer";
 
 interface Props {
   onSelectDeveloper: (developer: Developer) => void;

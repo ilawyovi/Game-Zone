@@ -6,8 +6,8 @@ import {
 
 import { Link } from "react-router-dom";
 
-import type { Game } from "../hooks/useGames";
-import getCroppedImageUrl from "../services/image-url";
+import type { Game } from "../../hooks/useGames";
+import getCroppedImageUrl from "../../services/image-url";
 
 interface Props {
   game: Game;

@@ -1,8 +1,8 @@
 import { Box, HStack, Image, Show } from "@chakra-ui/react";
-import Logo from "../assets/Logo.webp";
-import ColorModeSwitch from "./ColorModeSwitch";
+import Logo from "../../assets/Logo.webp";
+import ColorModeSwitch from "../common/ColorModeSwitch";
 import SearchInput from "./SearchInput";
-import FavoritesButton from "./FavoritesButton";
+import FavoritesButton from "../favorites/FavoritesButton";
 import MobileMenu from "./MobileMenu";
 
 interface Props {

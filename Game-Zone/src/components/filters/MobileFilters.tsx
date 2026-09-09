@@ -9,10 +9,10 @@ import PublisherSelector from "./PublisherSelector";
 import SortSelector from "./SortSelector";
 import ResetFilters from "./ResetFilters";
 
-import type { Genre } from "../hooks/useGenres";
-import type { Platform } from "../types/platform";
-import type { Developer } from "../types/developer";
-import type { Publisher } from "../types/publisher";
+import type { Genre } from "../../hooks/useGenres";
+import type { Platform } from "../../types/platform";
+import type { Developer } from "../../types/developer";
+import type { Publisher } from "../../types/publisher";
 
 interface Props {
   selectedGenre: Genre | null;

@@ -1,7 +1,7 @@
 import { IconButton } from "@chakra-ui/react";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import useFavorites from "../hooks/useFavorites";
+import useFavorites from "../../hooks/useFavorites";
 
 interface Props {
   gameId: number;

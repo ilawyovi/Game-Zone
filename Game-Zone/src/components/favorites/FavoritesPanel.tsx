@@ -16,9 +16,9 @@ import {
 } from "@chakra-ui/react";
 import { FiHeart, FiTrash2 } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import useFavorites from "../hooks/useFavorites";
-import useFavoriteGames from "../hooks/useFavoriteGames";
-import getCroppedImageUrl from "../services/image-url";
+import useFavorites from "../../hooks/useFavorites";
+import useFavoriteGames from "../../hooks/useFavoriteGames";
+import getCroppedImageUrl from "../../services/image-url";
 
 interface Props {
   isOpen: boolean;

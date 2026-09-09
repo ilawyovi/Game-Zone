@@ -11,18 +11,18 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import NavBar from "../components/NavBar";
-import GameGrid from "../components/GameGrid";
-import GenreList from "../components/GenreList";
-import PlatformSelector from "../components/PlatformSelector";
-import DeveloperSelector from "../components/DeveloperSelector";
-import PublisherSelector from "../components/PublisherSelector";
-import SortSelector from "../components/SortSelector";
-import GameHeading from "../components/GameHeading";
-import SidebarRecommendations from "../components/SidebarRecommendations";
-import ResetFilters from "../components/ResetFilters";
-import Pagination from "../components/Pagination";
-import MobileFilters from "../components/MobileFilters";
+import NavBar from "../components/navigation/NavBar";
+import GameGrid from "../components/games/GameGrid";
+import GenreList from "../components/filters/GenreList";
+import PlatformSelector from "../components/filters/PlatformSelector";
+import DeveloperSelector from "../components/filters/DeveloperSelector";
+import PublisherSelector from "../components/filters/PublisherSelector";
+import SortSelector from "../components/filters/SortSelector";
+import GameHeading from "../components/games/GameHeading";
+import SidebarRecommendations from "../components/sidebar/SidebarRecommendations";
+import ResetFilters from "../components/filters/ResetFilters";
+import Pagination from "../components/ui/Pagination";
+import MobileFilters from "../components/filters/MobileFilters";
 
 import useGames from "../hooks/useGames";
 import type { Genre } from "../hooks/useGenres";

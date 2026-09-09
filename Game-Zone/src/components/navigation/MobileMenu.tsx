@@ -11,9 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { FiHeart, FiMenu } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import ColorModeSwitch from "./ColorModeSwitch";
-import FavoritesPanel from "./FavoritesPanel";
-import useFavorites from "../hooks/useFavorites";
+import ColorModeSwitch from "../common/ColorModeSwitch";
+import FavoritesPanel from "../favorites/FavoritesPanel";
+import useFavorites from "../../hooks/useFavorites";
 import { useDisclosure } from "@chakra-ui/react";
 
 const MobileMenu = () => {
