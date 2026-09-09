@@ -41,19 +41,13 @@ const GameCard = ({ game }: Props) => {
         >
           <Image
             src={getCroppedImageUrl(game.background_image)}
-            width="100%"
             aspectRatio={16 / 9}
             objectFit="cover"
             borderTopRadius="md"
           />
         </Link>
 
-        <Box
-          position="absolute"
-          top={2}
-          right={2}
-          zIndex={2}
-        >
+        <Box position="absolute" top={2} right={2} zIndex={2}>
           <FavoriteButton gameId={game.id} />
         </Box>
       </Box>
@@ -82,36 +76,20 @@ const GameCard = ({ game }: Props) => {
             marginBottom={3}
             width="100%"
           >
-            <Box
-              flex="1"
-              minWidth={0}
-              overflow="hidden"
-            >
+            <Box flex="1" minWidth={0} overflow="hidden">
               <PlatformIconList
-                platforms={game.parent_platforms.map(
-                  (p) => p.platform,
-                )}
+                platforms={game.parent_platforms.map((p) => p.platform)}
               />
             </Box>
 
-            <HStack
-              spacing={2}
-              flexShrink={0}
-              marginLeft={2}
-            >
+            <HStack spacing={2} flexShrink={0} marginLeft={2}>
               {game.rating > 0 && (
-                <Text
-                  fontSize="sm"
-                  fontWeight="600"
-                  color="gray.600"
-                >
+                <Text fontSize="sm" fontWeight="600" color="gray.600">
                   {game.rating.toFixed(1)}
                 </Text>
               )}
 
-              <CriticScore
-                score={game.metacritic}
-              />
+              <CriticScore score={game.metacritic} />
             </HStack>
           </HStack>
 
@@ -128,33 +106,16 @@ const GameCard = ({ game }: Props) => {
             {game.name}
           </Heading>
 
-          <Box
-            marginTop="auto"
-            paddingTop={4}
-          >
-            <HStack
-              spacing={2}
-              color="gray.500"
-              fontSize="sm"
-              flexWrap="wrap"
-            >
+          <Box marginTop="auto" paddingTop={4}>
+            <HStack spacing={2} color="gray.500" fontSize="sm" flexWrap="wrap">
               {game.released && (
-                <Text>
-                  {new Date(
-                    game.released,
-                  ).getFullYear()}
-                </Text>
+                <Text>{new Date(game.released).getFullYear()}</Text>
               )}
 
-              {game.released &&
-                game.genres?.length > 0 && (
-                  <Text>•</Text>
-                )}
+              {game.released && game.genres?.length > 0 && <Text>•</Text>}
 
               {game.genres?.length > 0 && (
-                <Text noOfLines={1}>
-                  {game.genres[0].name}
-                </Text>
+                <Text noOfLines={1}>{game.genres[0].name}</Text>
               )}
             </HStack>
           </Box>

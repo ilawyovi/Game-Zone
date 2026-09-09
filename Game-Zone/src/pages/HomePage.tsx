@@ -23,6 +23,7 @@ import SidebarRecommendations from "../components/sidebar/SidebarRecommendations
 import ResetFilters from "../components/filters/ResetFilters";
 import Pagination from "../components/ui/Pagination";
 import MobileFilters from "../components/filters/MobileFilters";
+import BackToTop from "../components/ui/BackToTop";
 
 import useGames from "../hooks/useGames";
 import type { Genre } from "../hooks/useGenres";
@@ -272,7 +273,10 @@ function HomePage({ onSearch }: Props) {
     );
 
     if (sortOrder) {
-      params.set("sortOrder", sortOrder);
+      params.set(
+        "sortOrder",
+        sortOrder,
+      );
     } else {
       params.delete("sortOrder");
     }
@@ -443,6 +447,8 @@ function HomePage({ onSearch }: Props) {
           }
         />
       </GridItem>
+
+      <BackToTop />
     </Grid>
   );
 }
